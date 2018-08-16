@@ -2,4 +2,6 @@
 # Markdown 
 
 ## imagen de flujo (libreria)
-![md-links](https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg)
+
+
+![md-links](https://github.com/angelicanoriega/lim20181-Track-FE-markdown-list/blob/gh-pages/imagene%20de%20flujo/mi-diagrama-de-flujo.jpg)
