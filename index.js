@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const  fs  = require ( 'fs' ) ; 
+
 console.log("hola");
 const [,, ...args]=process.argv;
 console.log("args",fs.access);
