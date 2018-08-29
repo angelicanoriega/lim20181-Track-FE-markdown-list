@@ -4,7 +4,7 @@
   "description": "mardown",
   "main": "index.js",
   "scripts": {
-    "test": "mdLink"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -13,6 +13,7 @@
   "keywords": [
     "mardown"
   ],
+
   "author": "Maria Angelica Noriega",
   "license": "ISC",
   "bugs": {
