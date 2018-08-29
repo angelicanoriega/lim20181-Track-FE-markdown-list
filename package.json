@@ -1,6 +1,6 @@
 {
-  "name": "lim20181-track-fe-markdown-list",
-  "version": "1.0.0",
+  "name": "@mariaangueva/md-links",
+  "version": "0.0.1",
   "description": "mardown",
   "main": "index.js",
   "scripts": {

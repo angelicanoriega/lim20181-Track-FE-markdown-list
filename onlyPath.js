@@ -20,12 +20,13 @@ const seeFile = (path, acumulator) => {
     
     // ol(acumulator);
     myMarked(file, { renderer }) 
+
    
 }
 const onlyFileMd = (path, acumulator) => {
     const separatorMd = path.split('.');
     // console.log(separatorMd);
-    const elementMd = separatorMd.pop();
+    const elementMd = separatorMd. pop();
     // console.log(elementMd);
     if (elementMd === 'md') {
         seeFile(path,acumulator);
