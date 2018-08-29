@@ -1,96 +1,98 @@
 #!/usr/bin/env node
 
-const  fs  = require ( 'fs' ) ; 
+const fs = require('fs');
+const route = require('path');
+const onlyPath=require('../lim20181-Track-FE-markdown-list/onlyPath');
+const currentPath = process.cwd();
+const [, , ...args] = process.argv;
+const result=[];
+const url=args[0];
+const valueOptions=args[1];
+const valueAllOptions=args[2];
 
-const [,, ...args]=process.argv;
 
-const path =args[0];
-
-const mdLinks=(path)=>{
-fs.stat(path,(err, file) =>{
-    console.log('path',path);
-    // console.log();
-    // console.log('algo',file);
-    // console.log();
- 
-    if (file.isFile()) {
-
-        console.log('    file'); 
-        onlyFileMd(path);
+const confirmInformation=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=>{
+    const saveData={
+         route:'',
+         option:{
+             validate:false,
+             stats:false
+         }
     }
-    if (file.isDirectory()) {
-        console.log('    directory');
-        searchInDirectory(path);
+    if(file!==undefined){
+    const confirmPath= route.isAbsolute(file); 
+        if(confirmPath){ 
+            saveData.route=file;
+            // console.log(saveData);
+            // console.log(saveData.route);
+        }
+        else{
+            const convertPath= route.join(currentFile,file);
+            saveData.route=convertPath;
+            // console.log(saveData);
+            // console.log(saveData.route);
+        }  
     }
-    if(err){
+    if(file===undefined){
         console.log("Es una ruta invalida");
+        console.log();
+        console.log();
+        console.log('La sintaxis correcta de la linea de comando es:  ');
+        console.log();
+        console.log(' 1:  mdLinks <ruta> ');  
+        console.log(' 1:  mdLinks <ruta>  --stats  ');
+        console.log(' 2:  mdLinks <ruta>  --validate   ');
+        console.log(' 3:  mdLinks <ruta>  --validate  --stats  ');
+        console.log(' 4:  mdLinks <ruta>  --stats     --validate ');
+    }
+    if(onlyOptionsExists===undefined){
+        // console.log('e',saveData.route);
+        onlyPath(saveData.route,accumulator);
+        console.log(        onlyPath(saveData.route,accumulator)
+    );
         
     }
-
- 
-})};
-
-const searchInDirectory=(path)=>{
-    const pathBuf=Buffer.from(path);
-
-    fs.readdir(pathBuf,'utf-8',(err,pathContent)=>{
-        if(err){
-            console.log(err.message);
-            
+    if(onlyOptionsExists!==undefined){
+        if(onlyOptionsExists=== '--stats' && twoOptionsExists===undefined ){
+            saveData.option.stats=true;
+            console.log(saveData.option);
+            console.log(saveData.option.stats);
+            // mdLinks(saveData.route,saveData.option);
+        }      
+       else if(onlyOptionsExists=== '--validate' && twoOptionsExists===undefined ){
+            saveData.option.validate=true;
+            console.log(saveData.option);
+            console.log(saveData.option.validate);
+            // mdLinks(saveData.route,saveData.option);
         }
-        else{console.log(pathContent);
-            console.log(path);
-            pathContent.forEach(element => {
-                console.log(element);
-                console.log(path + '/' + element);
-                mdLinks(path + '/' + element);
-            });
+        else if(onlyOptionsExists=== '--stats' && twoOptionsExists==='--validate' ){
+            saveData.option.stats=true;
+            saveData.option.validate=true;
+            console.log(saveData.option);
+            console.log(saveData.option.stats);
+            // mdLinks(saveData.route,saveData.option);
         }
-    })
+
+        else if(onlyOptionsExists=== '--validate' && twoOptionsExists==='--stats' ){
+            saveData.option.stats=true;
+            saveData.option.validate=true;    
+            console.log(saveData.option);
+            console.log(saveData.option.validate);
+            console.log(saveData.option.stats);
+            // mdLinks(saveData.route,saveData.option);
+        }
+        else if(onlyOptionsExists!== '--validate'||onlyOptionsExists!=='--stats'||twoOptionsExists!=='--validate'|| twoOptionsExists!=='--stats' ){
+            console.log();
+            console.log('Sintaxis incorrecta:');
+            console.log();
+            console.log('La sintaxis correcta de la linea de comando es:  ');
+            console.log();
+            console.log(' 1:  mdLinks <ruta> ');  
+            console.log(' 1:  mdLinks <ruta>  --stats  ');
+            console.log(' 2:  mdLinks <ruta>  --validate   ');
+            console.log(' 3:  mdLinks <ruta>  --validate  --stats  ');
+            console.log(' 4:  mdLinks <ruta>  --stats     --validate ');
+        }
     }
-//Archivos md
-const onlyFileMd=(path)=>{
-   const separatorMd= path.split('.');
-   console.log(separatorMd);
-   const elementMd=separatorMd.pop ();
-   console.log(elementMd);
-   if (elementMd ==='md'){
-    seeFile(path) ;  
-   }
-   else{
-       console.log('NO EL UN ARCHIVO MD');      
-   }
 }
-
-//buscar los links 
-const  seeFile=(path)=>{
-fs.readFile(path,'utf-8',(err,pathContent)=>{
-    if(err){
-        console.log(err.message);
-        
-    }
-    else{console.log(pathContent);
-    }
-})
-}
-mdLinks(path)
-
-
-
-    // console.log('    size: ' + stats["size"]);
-    // console.log('    mode: ' + stats["mode"]);
-    // console.log('    others eXecute: ' + (stats["mode"] & 1 ? 'x' : '-'));
-    // console.log('    others Write:   ' + (stats["mode"] & 2 ? 'w' : '-'));
-    // console.log('    others Read:    ' + (stats["mode"] & 4 ? 'r' : '-'));
- 
-    // console.log('    group eXecute:  ' + (stats["mode"] & 10 ? 'x' : '-'));
-    // console.log('    group Write:    ' + (stats["mode"] & 20 ? 'w' : '-'));
-    // console.log('    group Read:     ' + (stats["mode"] & 40 ? 'r' : '-'));
- 
-    // console.log('    owner eXecute:  ' + (stats["mode"] & 100 ? 'x' : '-'));
-    // console.log('    owner Write:    ' + (stats["mode"] & 200 ? 'w' : '-'));
-    // console.log('    owner Read:     ' + (stats["mode"] & 400 ? 'r' : '-'));
- 
- 
-    // console.log('    file:           ' + (stats["mode"] & 0100000 ? 'f' : '-'));
-    // console.log('    directory:      ' + (stats["mode"] & 0040000 ? 'd' : '-'));
+ confirmInformation(url,currentPath,valueOptions,valueAllOptions,result);
