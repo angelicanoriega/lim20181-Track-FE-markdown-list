@@ -5,11 +5,10 @@ const ol=require('../lim20181-Track-FE-markdown-list/whitoption')
 
 const seeFile = (path, acumulator) => {
     const file = fs.readFileSync(path, 'utf8');
-    
     console.log('file', file);
     var renderer = new myMarked.Renderer();
     renderer.link = (href,title,text) => {
-        acumulator.push(
+    acumulator.push(
             {
                 href,
                 text,
@@ -17,13 +16,11 @@ const seeFile = (path, acumulator) => {
             }
         )
     }
+    console.log(acumulator);
     
-    
-    myMarked(file, { renderer })
-    ol(acumulator)
-    
-    
-
+    // ol(acumulator);
+    myMarked(file, { renderer }) 
+   
 }
 const onlyFileMd = (path, acumulator) => {
     const separatorMd = path.split('.');
@@ -33,6 +30,7 @@ const onlyFileMd = (path, acumulator) => {
     if (elementMd === 'md') {
         seeFile(path,acumulator);
     } else {
+
     }
 }
 const confirmCurrent=(path,acumulator)=>{
@@ -61,8 +59,18 @@ const confirmCurrent=(path,acumulator)=>{
 
 
 const fileResultsAsPromise=(path,acumulator)=>{
-    // console.log('hola',path);
-    confirmCurrent(path,acumulator);
+const promise = new Promise((resolve, reject) => {
+    try{
+        confirmCurrent(path,acumulator);
+        console.log(  'asdfgh',    confirmCurrent(path,acumulator));
+        resolve(acumulator);
+        
+    }
+    catch (error){
+        reject(error);
+    }
+});
+return promise;
 }
 
 

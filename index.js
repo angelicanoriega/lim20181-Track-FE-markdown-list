@@ -47,10 +47,8 @@ const confirmInformation=(file,currentFile,onlyOptionsExists,twoOptionsExists,ac
     }
     if(onlyOptionsExists===undefined){
         // console.log('e',saveData.route);
-        onlyPath(saveData.route,accumulator);
-        console.log(        onlyPath(saveData.route,accumulator)
-    );
-        
+        onlyPath(saveData.route,accumulator)
+        // .then(response =>console.log('index',response));        
     }
     if(onlyOptionsExists!==undefined){
         if(onlyOptionsExists=== '--stats' && twoOptionsExists===undefined ){
