@@ -5,6 +5,7 @@ const ol=require('../lim20181-Track-FE-markdown-list/whitoption')
 
 const seeFile = (path, acumulator) => {
     const file = fs.readFileSync(path, 'utf8');
+    
     console.log('file', file);
     var renderer = new myMarked.Renderer();
     renderer.link = (href,title,text) => {
