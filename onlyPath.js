@@ -3,12 +3,12 @@ const fs = require('fs');
 const route = require('path');
 const ol=require('../lim20181-Track-FE-markdown-list/whitoption')
 
-const seeFile = (path, acumulator) => {
+const seeFile = (path) => {
+const array=[]    
     const file = fs.readFileSync(path, 'utf8');
-    console.log('file', file);
     var renderer = new myMarked.Renderer();
     renderer.link = (href,title,text) => {
-    acumulator.push(
+    array.push(
             {
                 href,
                 text,
@@ -16,64 +16,74 @@ const seeFile = (path, acumulator) => {
             }
         )
     }
-    console.log(acumulator);
-    
-    // ol(acumulator);
-    myMarked(file, { renderer }) 
-
+myMarked(file, { renderer }) 
+return array
    
 }
-const onlyFileMd = (path, acumulator) => {
-    const separatorMd = path.split('.');
-    // console.log(separatorMd);
-    const elementMd = separatorMd. pop();
-    // console.log(elementMd);
-    if (elementMd === 'md') {
-        seeFile(path,acumulator);
-    } else {
-
-    }
+const onlyFileMd = (path) => {
+const md = /\.(md|mkdn|mdown|markdown?)$/i;
+const obj={
+    path,
+    value:md.test(route.extname(path))
 }
-const confirmCurrent=(path,acumulator)=>{
-    fs.stat(path,(err,pathContent) => {
-        if (pathContent.isFile()) {
-            // console.log('    file');
-            onlyFileMd(path,acumulator);
-        }
-        else if (pathContent.isDirectory()) {
-            // console.log('    directory');
-            const pathBuf = Buffer.from(path);
-            fs.readdir(pathBuf, 'utf-8', (err, pathContent) => {
-                if (err) { 
-                console.log(err.message);
-                } 
-                else {
-                    pathContent.forEach(element => {
-                        const newPath = path + '/' + element;
-                        confirmCurrent(newPath,acumulator);
-                    });
-                }
-            })
-        }
-    }) 
-};
-
-
-const fileResultsAsPromise=(path,acumulator)=>{
-const promise = new Promise((resolve, reject) => {
-    try{
-        confirmCurrent(path,acumulator);
-        console.log(  'asdfgh',    confirmCurrent(path,acumulator));
-        resolve(acumulator);
-        
-    }
-    catch (error){
-        reject(error);
-    }
-});
-return promise;
+return obj
 }
 
+const fileResultsAsPromise=(path)=>{
+const promise = new Promise((resolve, reject) => {  
+const pathContent=fs.statSync(path);
+if (pathContent.isFile()) {    
+    const md=onlyFileMd(path)       
+    if(md.value){ 
+        const result=seeFile(md.path)        
+        resolve(result);
+    } 
+    if(!md.value){   
+        resolve('NO SE ENCONTRO MARDOWN');
+    } 
+}
+else if (pathContent.isDirectory()) {
+    const pathBuf = Buffer.from(path);
+    const contentPath = fs.readdirSync(pathBuf, 'utf8');
+        contentPath.forEach(element => {
+        const newpath = path + '/' + element;
+        fileResultsAsPromise(newpath);
+        const md=onlyFileMd(newpath)           
+        if(md.value){ 
+            const result=seeFile(md.path)        
+            resolve(result);
+        }
+        if(!md.value){   
+            console.log('NO ES MARDOWN'+md.path);
+        }  
+        })                
+}  
+})
+return promise        
+}
 
-module.exports=fileResultsAsPromise;
+// 
+const retourWhitPromise=(path,option)=>{
+    console.log(option);
+    console.log(path);
+    
+    
+    
+    const promise = new Promise((resolve, reject) => {  
+      onlyPath(path)
+      .then(response =>{
+       if(response[0]===undefined){
+          console.log('NO SE ENCONTRARON LINKS')   
+       }  
+       else{
+       response
+       console.log('entre',response);
+       
+      } 
+      });
+    });  
+    }
+
+module.exports={fileResultsAsPromise,onlyFileMd,seeFile,retourWhitPromise};
+
     

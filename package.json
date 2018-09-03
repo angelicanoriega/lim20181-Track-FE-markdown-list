@@ -27,6 +27,7 @@
     "markdown-link-extractor": "^1.2.0",
     "markdown-links-nwc": "^1.1.5",
     "marked": "^0.5.0",
+    "node-fetch": "^2.2.0",
     "node-fetch-polyfill": "^2.0.6"
   },
   "devDependencies": {

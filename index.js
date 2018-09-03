@@ -3,6 +3,7 @@
 const fs = require('fs');
 const route = require('path');
 const onlyPath=require('../lim20181-Track-FE-markdown-list/onlyPath');
+const whitOption=require('../lim20181-Track-FE-markdown-list/whitoption');
 const currentPath = process.cwd();
 const [, , ...args] = process.argv;
 const result=[];
@@ -11,7 +12,16 @@ const valueOptions=args[1];
 const valueAllOptions=args[2];
 
 
-const confirmInformation=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=>{
+const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=>{
+    const errorMesage={
+        error:'RUTA INVALIDA',
+        correctOption:'La sintaxis correcta de la linea de comando es:',
+        a:'  mdLinks <ruta> ',
+        b:' mdLinks <ruta>  --stats ',
+        c:'mdLinks <ruta>  --validate ',
+        d:'mdLinks <ruta>  --validate  --stats',
+        e:' mdLinks <ruta>  --stats     --validate'
+    }    
     const saveData={
          route:'',
          option:{
@@ -23,74 +33,90 @@ const confirmInformation=(file,currentFile,onlyOptionsExists,twoOptionsExists,ac
     const confirmPath= route.isAbsolute(file); 
         if(confirmPath){ 
             saveData.route=file;
-            // console.log(saveData);
-            // console.log(saveData.route);
         }
         else{
             const convertPath= route.join(currentFile,file);
             saveData.route=convertPath;
-            // console.log(saveData);
-            // console.log(saveData.route);
         }  
     }
     if(file===undefined){
-        console.log("Es una ruta invalida");
-        console.log();
-        console.log();
-        console.log('La sintaxis correcta de la linea de comando es:  ');
-        console.log();
-        console.log(' 1:  mdLinks <ruta> ');  
-        console.log(' 1:  mdLinks <ruta>  --stats  ');
-        console.log(' 2:  mdLinks <ruta>  --validate   ');
-        console.log(' 3:  mdLinks <ruta>  --validate  --stats  ');
-        console.log(' 4:  mdLinks <ruta>  --stats     --validate ');
+        return console.log(errorMesage);
     }
     if(onlyOptionsExists===undefined){
-        // console.log('e',saveData.route);
-        onlyPath(saveData.route,accumulator)
-        // .then(response =>console.log('index',response));        
+        onlyPath.fileResultsAsPromise(saveData.route)
+        .then(response =>{
+         if(response[0]===undefined){
+            console.log('NO SE ENCONTRARON LINKS')   
+         }  
+         else{console.log(response)  } 
+         
+        });  
+                   
     }
     if(onlyOptionsExists!==undefined){
         if(onlyOptionsExists=== '--stats' && twoOptionsExists===undefined ){
             saveData.option.stats=true;
-            console.log(saveData.option);
-            console.log(saveData.option.stats);
-            // mdLinks(saveData.route,saveData.option);
+            onlyPath.fileResultsAsPromise(saveData.route)
+            .then(response =>{
+             if(response[0]===undefined){
+                console.log('NO SE ENCONTRARON LINKS')   
+             }  
+             else{ 
+             whitOption(response,saveData.option) }
+            });  
         }      
        else if(onlyOptionsExists=== '--validate' && twoOptionsExists===undefined ){
             saveData.option.validate=true;
-            console.log(saveData.option);
-            console.log(saveData.option.validate);
-            // mdLinks(saveData.route,saveData.option);
-        }
+            onlyPath.fileResultsAsPromise(saveData.route)
+            .then(response =>{
+             if(response[0]===undefined){
+                console.log('NO SE ENCONTRARON LINKS')   
+             }  
+             else{ whitOption(response,saveData.option)
+            //  console.log('index',whitOption(response,saveData.option));
+                // .then(response=>{
+                //    
+                    
+                // })
+ } 
+            });  
+
+       }   
         else if(onlyOptionsExists=== '--stats' && twoOptionsExists==='--validate' ){
             saveData.option.stats=true;
             saveData.option.validate=true;
-            console.log(saveData.option);
-            console.log(saveData.option.stats);
-            // mdLinks(saveData.route,saveData.option);
+            onlyPath.fileResultsAsPromise(saveData.route)
+            .then(response =>{
+             if(response[0]===undefined){
+                console.log('NO SE ENCONTRARON LINKS')   
+             }  
+             else{ whitOption(response,saveData.option) } 
+            //  console.log('ffgggggggggggggg',whitOption(response,saveData.option));
+             
+            });  
         }
 
         else if(onlyOptionsExists=== '--validate' && twoOptionsExists==='--stats' ){
             saveData.option.stats=true;
             saveData.option.validate=true;    
-            console.log(saveData.option);
-            console.log(saveData.option.validate);
-            console.log(saveData.option.stats);
-            // mdLinks(saveData.route,saveData.option);
+            onlyPath.fileResultsAsPromise(saveData.route)
+            .then(response =>{
+             if(response[0]===undefined){
+                console.log('NO SE ENCONTRARON LINKS')   
+             }  
+             else{ whitOption(response,saveData.option)
+            //  console.log('index',whitOption(response,saveData.option));
+                // .then(response=>{
+                //    
+                    
+                // })
+ } 
+            });  
         }
         else if(onlyOptionsExists!== '--validate'||onlyOptionsExists!=='--stats'||twoOptionsExists!=='--validate'|| twoOptionsExists!=='--stats' ){
-            console.log();
-            console.log('Sintaxis incorrecta:');
-            console.log();
-            console.log('La sintaxis correcta de la linea de comando es:  ');
-            console.log();
-            console.log(' 1:  mdLinks <ruta> ');  
-            console.log(' 1:  mdLinks <ruta>  --stats  ');
-            console.log(' 2:  mdLinks <ruta>  --validate   ');
-            console.log(' 3:  mdLinks <ruta>  --validate  --stats  ');
-            console.log(' 4:  mdLinks <ruta>  --stats     --validate ');
+            errorMesage.error='SINTAXIS INCORRECTA';
+            return console.log(errorMesage);
         }
     }
 }
- confirmInformation(url,currentPath,valueOptions,valueAllOptions,result);
+ mdLinks(url,currentPath,valueOptions,valueAllOptions,result);
