@@ -27,10 +27,38 @@ Es por esto se creó esta herramienta, que lee y analiza archivos en formato Mar
 
  ## Ejemplos de Uso 
 
-Solo la ruta del archivo: Muestra ruta de archivo o carpeta, texto de referencia y links.
-
 `$ md-links <route> `
 ----------------------
 
-[![npm]](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ruta.PNG)
+Solo la ruta del archivo: Muestra ruta de archivo o carpeta, texto de referencia y links.
 
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ruta.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ruta.PNG)
+
+`$ md-links <route> --validate`
+----------------------
+
+Status 400 indica link no funcional, status 200 indica link funcional.
+
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/validate.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/validate.PNG)
+
+En el caso de validate considere el último array como la respuesta, debido a que se acumula en el array según se valida en estado del link.
+
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/validate2.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/validate2.PNG)
+
+`$ md-links <route> --stats`
+----------------------
+En el caso de stats considere el último array como la respuesta, debido a que se acumula en el array según se calcula la cantidad de links.
+
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/stats.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/stats.PNG)
+
+`$ md-links <route> --validate --stats`
+----------------------
+
+En este caso considere el ultimo array como respuesta.
+
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ambos.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ambos.PNG)
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ambos2.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ambos2.PNG)
+
+Lo subrayado es el valor a tomar en cuenta del total,normal y broken.
+
+[![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ambos3.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ambos3.PNG)
