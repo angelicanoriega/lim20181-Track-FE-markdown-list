@@ -48,15 +48,15 @@ else if (pathContent.isDirectory()) {
     const contentPath = fs.readdirSync(pathBuf, 'utf8');
         contentPath.forEach(element => {
         const newpath = path + '/' + element;
-        fileResultsAsPromise(newpath);
-        const md=onlyFileMd(newpath)           
+        // return fileResultsAsPromise(newpath);
+         const md=onlyFileMd(newpath)           
         if(md.value){ 
             const result=seeFile(md.path)        
             resolve(result);
         }
         if(!md.value){   
             console.log('NO ES MARDOWN'+md.path);
-        }  
+        } 
         })                
 }  
 })

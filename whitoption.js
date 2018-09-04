@@ -1,3 +1,15 @@
+ const unique=(arr, prop)=> {
+  const nuevoArray = [];
+  const lookup  = {};
+  for (var i in arr) {
+      lookup[arr[i][prop]] = arr[i];
+  }
+  for (i in lookup) {
+      nuevoArray.push(lookup[i]);
+  }
+  return nuevoArray;
+}
+
 const fetch = require('node-fetch');
 const validateLink = (link) => {
   return fetch(link.href)
@@ -17,69 +29,69 @@ const retourWhitPromise=(path,option,calback)=>{
   const result=[];
   // const promise = new Promise((resolve, reject) => {
   if(optionV && !optionS){
-   path.forEach(element => {
-   validateLink(element)
+   Promise.all(path.map(element=>{
+     return validateLink(element)
+  }))
    .then(
     response=>{
-    result.push(response)
-    calback(result)
+    calback(response)
     }
   )   
-  })    
   }
   if(!optionV && optionS){
     const obj=[{
      total:0,
-     normal:0,
+     unique:0,
      broken:0
     }]
-    path.forEach(element => {
-      validateLink(element)
+    Promise.all(path.map(element=>{
+      return validateLink(element)
+    }))
       .then(
-       response=>{
-       if(response.status===200){
-       obj[0].normal++;
-       }  
-       if(response.status==='400'){
+      response=>{
+      const funcional=unique(response,'href');
+      obj[0].unique=funcional.length;
+      response.map(element => {
+       
+       if(element.status==='400'){
         obj[0].broken++;
        } 
-       if(response.href===response.href){
+       if(element.href===element.href){
         obj[0].total++;
        } 
+        return (element.href)
+       }); 
+       
       calback(obj)
+      
        }
      )   
-     }) 
+     
   }
-  if(optionV && optionS){
-    array=[];
-    const obj=[{
-      total:0,
-      normal:0,
-      broken:0
-     }]
-     path.forEach(element => {
-       validateLink(element)
-       .then(
-        response=>{
-        if(response.status===200){
-          obj[0].normal++;
-        }  
-        if(response.status==='400'){
-          obj[0].broken++;
-        } 
-        if(response.href===response.href){
-         obj[0].total++;
-        } 
-        response.total=obj[0].total;
-        response.normal=obj[0].normal;
-        response.broken=obj[0].broken;
-        result.push(response)
-        calback(result)
-        }
-      )   
-      }) 
-  }  
+  if(optionV && optionS) {
+    Promise.all(path.map(element=>{
+      return validateLink(element)
+    }))
+      .then(
+       response=>{
+        response.unique=0;
+        response.broken=0;
+        response.total=0;
+        const funcional=unique(response,'href');
+        response.unique=funcional.length;
+        response.map(element => {
+       if(element.status==='400'){
+        response.broken++;
+       } 
+       if(element.href===element.href){
+        response.total++;
+       } 
+        return element
+       }); 
+      calback(response)
+       }
+     ) 
+  }   
   // });
   
   
