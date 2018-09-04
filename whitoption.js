@@ -6,7 +6,6 @@ const validateLink = (link) => {
     link.statusText = response.statusText;
     return link;
   }).catch(err => {
-    link.error = err.code;
     link.status = '400';
     link.statusText ='fail';
     return link;

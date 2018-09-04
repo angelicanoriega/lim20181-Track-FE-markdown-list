@@ -63,7 +63,7 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
              }  
              else{ 
              whitOption(response,saveData.option,(callback)=>{
-                 console.log('index',callback);
+                 console.log(callback);
              })
              }
             });  
@@ -91,7 +91,7 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
              }  
              else{
                 whitOption(response,saveData.option,(callback)=>{
-                    console.log('index',callback);
+                    console.log(callback);
                 })
             } 
             });  
@@ -107,7 +107,7 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
              }  
              else{ 
                    whitOption(response,saveData.option,(callback)=>{
-                console.log('index',callback);
+                console.log(callback);
             })
             } 
             });  
