@@ -12,49 +12,48 @@ const validateLink = (link) => {
     return link;
   })
 }
-const retourWhitPromise=(path,option)=>{
-  o=[]
+const retourWhitPromise=(path,option,calback)=>{
 	const optionV=option.validate;
   const optionS=option.stats;
+  const result=[];
   // const promise = new Promise((resolve, reject) => {
   if(optionV && !optionS){
    path.forEach(element => {
    validateLink(element)
    .then(
     response=>{
-      console.log(response);
-      
+    result.push(response)
+    calback(result)
     }
   )   
   })    
   }
   if(!optionV && optionS){
-    const obj={
+    const obj=[{
      total:0,
      normal:0,
      broken:0
-    }
+    }]
     path.forEach(element => {
       validateLink(element)
       .then(
        response=>{
        if(response.status===200){
-       obj.normal++;
+       obj[0].normal++;
        }  
        if(response.status==='400'){
-        obj.broken++;
+        obj[0].broken++;
        } 
        if(response.href===response.href){
-        obj.total++;
+        obj[0].total++;
        } 
-  console.log(obj);
-  
+      calback(obj)
        }
      )   
      }) 
   }
   if(optionV && optionS){
-    o=[];
+    array=[];
     const obj=[{
       total:0,
       normal:0,
@@ -76,8 +75,8 @@ const retourWhitPromise=(path,option)=>{
         response.total=obj[0].total;
         response.normal=obj[0].normal;
         response.broken=obj[0].broken;
-        console.log(response);
-        
+        result.push(response)
+        calback(result)
         }
       )   
       }) 

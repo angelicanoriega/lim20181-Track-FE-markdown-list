@@ -6,13 +6,12 @@ const onlyPath=require('../lim20181-Track-FE-markdown-list/onlyPath');
 const whitOption=require('../lim20181-Track-FE-markdown-list/whitoption');
 const currentPath = process.cwd();
 const [, , ...args] = process.argv;
-const result=[];
 const url=args[0];
 const valueOptions=args[1];
 const valueAllOptions=args[2];
 
 
-const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=>{
+const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
     const errorMesage={
         error:'RUTA INVALIDA',
         correctOption:'La sintaxis correcta de la linea de comando es:',
@@ -34,10 +33,11 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=
         if(confirmPath){ 
             saveData.route=file;
         }
-        else{
+        else if(!confirmPath){
             const convertPath= route.join(currentFile,file);
             saveData.route=convertPath;
         }  
+
     }
     if(file===undefined){
         return console.log(errorMesage);
@@ -62,7 +62,10 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
              else{ 
-             whitOption(response,saveData.option) }
+             whitOption(response,saveData.option,(callback)=>{
+                 console.log('index',callback);
+             })
+             }
             });  
         }      
        else if(onlyOptionsExists=== '--validate' && twoOptionsExists===undefined ){
@@ -72,14 +75,10 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=
              if(response[0]===undefined){
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
-             else{ whitOption(response,saveData.option)
-            //  console.log('index',whitOption(response,saveData.option));
-                // .then(response=>{
-                //    
-                    
-                // })
- } 
-            });  
+             else{ whitOption(response,saveData.option,(callback)=>{
+                console.log(callback);
+            }) }
+        }) 
 
        }   
         else if(onlyOptionsExists=== '--stats' && twoOptionsExists==='--validate' ){
@@ -90,9 +89,11 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=
              if(response[0]===undefined){
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
-             else{ whitOption(response,saveData.option) } 
-            //  console.log('ffgggggggggggggg',whitOption(response,saveData.option));
-             
+             else{
+                whitOption(response,saveData.option,(callback)=>{
+                    console.log('index',callback);
+                })
+            } 
             });  
         }
 
@@ -104,13 +105,11 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=
              if(response[0]===undefined){
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
-             else{ whitOption(response,saveData.option)
-            //  console.log('index',whitOption(response,saveData.option));
-                // .then(response=>{
-                //    
-                    
-                // })
- } 
+             else{ 
+                   whitOption(response,saveData.option,(callback)=>{
+                console.log('index',callback);
+            })
+            } 
             });  
         }
         else if(onlyOptionsExists!== '--validate'||onlyOptionsExists!=='--stats'||twoOptionsExists!=='--validate'|| twoOptionsExists!=='--stats' ){
@@ -118,5 +117,7 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists,accumulator)=
             return console.log(errorMesage);
         }
     }
+return saveData  
 }
- mdLinks(url,currentPath,valueOptions,valueAllOptions,result);
+ mdLinks(url,currentPath,valueOptions,valueAllOptions);
+ module.exports=mdLinks;

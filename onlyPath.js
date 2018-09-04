@@ -1,6 +1,7 @@
 const myMarked = require('marked');
 const fs = require('fs');
 const route = require('path');
+const currentFile= process.cwd();
 const ol=require('../lim20181-Track-FE-markdown-list/whitoption')
 
 const seeFile = (path) => {
@@ -63,27 +64,8 @@ return promise
 }
 
 // 
-const retourWhitPromise=(path,option)=>{
-    console.log(option);
-    console.log(path);
-    
-    
-    
-    const promise = new Promise((resolve, reject) => {  
-      onlyPath(path)
-      .then(response =>{
-       if(response[0]===undefined){
-          console.log('NO SE ENCONTRARON LINKS')   
-       }  
-       else{
-       response
-       console.log('entre',response);
-       
-      } 
-      });
-    });  
-    }
 
-module.exports={fileResultsAsPromise,onlyFileMd,seeFile,retourWhitPromise};
+
+module.exports={fileResultsAsPromise,onlyFileMd,seeFile};
 
     
