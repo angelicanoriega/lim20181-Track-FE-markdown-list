@@ -26,8 +26,7 @@ const validateLink = (link) => {
 const retourWhitPromise=(path,option,calback)=>{
 	const optionV=option.validate;
   const optionS=option.stats;
-  const result=[];
-  // const promise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => {
   if(optionV && !optionS){
    Promise.all(path.map(element=>{
      return validateLink(element)
@@ -74,11 +73,10 @@ const retourWhitPromise=(path,option,calback)=>{
     }))
       .then(
        response=>{
-        response.unique=0;
-        response.broken=0;
-        response.total=0;
         const funcional=unique(response,'href');
         response.unique=funcional.length;
+        response.broken=0;
+        response.total=0;
         response.map(element => {
        if(element.status==='400'){
         response.broken++;
@@ -92,7 +90,7 @@ const retourWhitPromise=(path,option,calback)=>{
        }
      ) 
   }   
-  // });
+  });
   
   
 }
