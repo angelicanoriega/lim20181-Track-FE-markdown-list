@@ -62,9 +62,12 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
              else{ 
-             whitOption(response,saveData.option,(callback)=>{
-                 console.log(callback);
-             })
+             whitOption(response,saveData.option,'callback')
+             .then(response =>{
+                console.log(response);
+                
+            })
+             
              }
             });  
         }      
@@ -75,9 +78,13 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
              if(response[0]===undefined){
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
-             else{ whitOption(response,saveData.option,(callback)=>{
-                console.log(callback);
-            }) }
+             else{ whitOption(response,saveData.option)
+             .then(response =>{
+                 console.log(response);
+                 
+             })
+
+             }
         }) 
 
        }   
@@ -90,9 +97,9 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
              else{
-                whitOption(response,saveData.option,(callback)=>{
+                whitOption(response,saveData.option)
                     console.log(callback);
-                })
+                
             } 
             });  
         }
@@ -106,9 +113,8 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
                 console.log('NO SE ENCONTRARON LINKS')   
              }  
              else{ 
-                   whitOption(response,saveData.option,(callback)=>{
+                   whitOption(response,saveData.option)
                 console.log(callback);
-            })
             } 
             });  
         }
