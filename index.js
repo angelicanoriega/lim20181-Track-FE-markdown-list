@@ -98,8 +98,10 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
              }  
              else{
                 whitOption(response,saveData.option)
-                    console.log(callback);
-                
+                .then(response =>{
+                    console.log(response);
+                    
+                })
             } 
             });  
         }
@@ -114,7 +116,10 @@ const mdLinks=(file,currentFile,onlyOptionsExists,twoOptionsExists)=>{
              }  
              else{ 
                    whitOption(response,saveData.option)
-                console.log(callback);
+                   .then(response =>{
+                    console.log(response);
+                    
+                })
             } 
             });  
         }

@@ -1,11 +1,12 @@
 // Filtra los links que no se repiten
-const unique=(arr, prop)=> {
+const unique=(array, prop)=> {
 const nuevoArray = [];
 const lookup  = {};
-for (var i in arr) {
-    lookup[arr[i][prop]] = arr[i];
+
+for (let i in array) {
+    lookup[array[i][prop]] = array[i];
 }
-for (i in lookup) {
+for (let i in lookup) {
     nuevoArray.push(lookup[i]);
 }
 return nuevoArray;
@@ -31,10 +32,7 @@ const retourWhitPromise=(path,option)=>{
 const optionV=option.validate;
 const optionS=option.stats;
 const promise = new Promise((resolve, reject) => {
-  Promise.all(path.map(element=>
-  {
-    return validateLink(element)
-  }))  
+  Promise.all(path.map(element=>{return validateLink(element)}))  
   .then(
     response=>{
     if(optionV && !optionS)
