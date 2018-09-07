@@ -51,6 +51,6 @@ const fileResultsAsPromise=(path)=>{
     return promise  
 }
 
-module.exports={fileResultsAsPromise,seeFile};
+module.exports=fileResultsAsPromise;
 
     

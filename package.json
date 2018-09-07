@@ -23,12 +23,8 @@
   },
   "homepage": "https://github.com/angelicanoriega/lim20181-Track-FE-markdown-list#readme",
   "dependencies": {
-    "axios": "^0.18.0",
-    "markdown-link-extractor": "^1.2.0",
-    "markdown-links-nwc": "^1.1.5",
     "marked": "^0.5.0",
-    "node-fetch": "^2.2.0",
-    "node-fetch-polyfill": "^2.0.6"
+    "node-fetch": "^2.2.0"
   },
   "devDependencies": {
     "jest": "^23.5.0"

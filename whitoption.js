@@ -74,7 +74,7 @@ const promise = new Promise((resolve, reject) => {
         }); 
       resolve(response)
         }
-})    
+})  
  });
  return promise  
 }
