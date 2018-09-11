@@ -32,6 +32,7 @@ const retourWhitPromise=(path,option)=>{
 const optionV=option.validate;
 const optionS=option.stats;
 const promise = new Promise((resolve, reject) => {
+  try{
   Promise.all(path.map(element=>{return validateLink(element)}))  
   .then(
     response=>{
@@ -74,7 +75,11 @@ const promise = new Promise((resolve, reject) => {
         }); 
       resolve(response)
         }
-})  
+  })
+}
+catch(error) {
+reject(error)
+}
  });
  return promise  
 }

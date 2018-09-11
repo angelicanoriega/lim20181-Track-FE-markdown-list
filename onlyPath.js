@@ -41,16 +41,13 @@ else if (pathContent.isDirectory()) {
 }
 
 // retorno con promesas
-const fileResultsAsPromise=(path)=>{   
+const fileResult=(path)=>{   
     const file=[];
-    const promise = new Promise((resolve, reject) => { 
-    fileOdirectory(path,file)
-    const result=seeFile(file);        
-    resolve(result);
-     })
-    return promise  
+        fileOdirectory(path,file)
+        const result=seeFile(file); 
+        return result       
 }
 
-module.exports=fileResultsAsPromise;
+module.exports=fileResult;
 
     

@@ -37,27 +37,25 @@ const promise = new Promise((resolve, reject) => {
         saveData.route=convertPath;
         }
     } 
-    onlyPath(saveData.route)
-    .then(response =>{
         if(onlyOptionsExists===undefined){
-            if(response[0]===undefined){
+            if(onlyPath(saveData.route)[0]===undefined){
             resolve('NO SE ENCONTRARON LINKS');
             }  
             else{
-            resolve(response);
+            resolve(onlyPath(saveData.route));
             } 
         }
         if(onlyOptionsExists!==undefined){
             if(onlyOptionsExists=== '--stats' && twoOptionsExists===undefined ){
             saveData.option.stats=true;
-            whitOption(response,saveData.option)
+            whitOption(onlyPath(saveData.route),saveData.option)
             .then(response =>{
             resolve(response);
             })  
             }
             else if(onlyOptionsExists=== '--validate' && twoOptionsExists===undefined ){
             saveData.option.validate=true;
-            whitOption(response,saveData.option)
+            whitOption(onlyPath(saveData.route),saveData.option)
             .then(response =>{
             resolve(response);
             }) 
@@ -65,7 +63,7 @@ const promise = new Promise((resolve, reject) => {
             else if(onlyOptionsExists=== '--stats' && twoOptionsExists==='--validate' ){
             saveData.option.stats=true;
             saveData.option.validate=true;
-            whitOption(response,saveData.option)
+            whitOption(onlyPath(saveData.route),saveData.option)
             .then(response =>{
             resolve(response);
             }) 
@@ -73,7 +71,7 @@ const promise = new Promise((resolve, reject) => {
             else if(onlyOptionsExists=== '--validate' && twoOptionsExists==='--stats' ){
             saveData.option.stats=true;
             saveData.option.validate=true;
-            whitOption(response,saveData.option)
+            whitOption(onlyPath(saveData.route),saveData.option)
             .then(response =>{
             resolve(response);
             }) 
@@ -83,7 +81,6 @@ const promise = new Promise((resolve, reject) => {
             resolve(errorMesage);
             }
         }    
-    })
 
 })
 return promise
@@ -95,3 +92,6 @@ return promise
 )
 
  module.exports=mdLinks;
+
+
+
