@@ -12,7 +12,7 @@ const valueAllOptions = args[2];
 
 const mdLinks = (file, currentFile, onlyOptionsExists, twoOptionsExists) => {
   const errorMesage = {
-    error: 'RUTA INVALIDA',
+    error: 'SINTAXIS INCORRECTA',
     correctOption: 'La sintaxis correcta de la linea de comando es:',
     a: '  mdLinks <ruta> ',
     b: ' mdLinks <ruta>  --stats ',
@@ -30,7 +30,6 @@ const mdLinks = (file, currentFile, onlyOptionsExists, twoOptionsExists) => {
   const promise = new Promise((resolve, reject) => {
     if (file !== undefined) {
       const confirmPath = route.isAbsolute(file);
-     
       if (confirmPath) {
         saveData.route = file;
       } else if (!confirmPath) {
@@ -38,11 +37,10 @@ const mdLinks = (file, currentFile, onlyOptionsExists, twoOptionsExists) => {
         saveData.route = convertPath;
       }
     }
-     if (onlyOptionsExists === undefined) {
+    if (onlyOptionsExists === undefined) {
       if (onlyPath(saveData.route)[0] === undefined) {
         resolve('NO SE ENCONTRARON LINKS');
       } else {
-       
         resolve(onlyPath(saveData.route));
       }
     }
@@ -74,11 +72,9 @@ const mdLinks = (file, currentFile, onlyOptionsExists, twoOptionsExists) => {
             resolve(response);
           })
       } else if (onlyOptionsExists !== '--validate' || onlyOptionsExists !== '--stats' || twoOptionsExists !== '--validate' || twoOptionsExists !== '--stats') {
-        errorMesage.error = 'SINTAXIS INCORRECTA';
         resolve(errorMesage);
       }
     }
-
   })
   return promise
 }
@@ -90,3 +86,7 @@ module.exports = mdLinks;
 //     }
 
 //   )
+//   .catch(error=>{
+//     console.log('error',error);
+
+//   })

@@ -29,7 +29,7 @@ const fileOdirectory = (path, array) => {
     const md = /\.(md|mkdn|mdown|markdown?)$/i;
     const boliano = md.test(route.extname(path));
     if (boliano) {
-      array.push(path)
+      array.push(path);
     }
   } else if (pathContent.isDirectory()) {
     const pathBuf = Buffer.from(path);
