@@ -1,4 +1,4 @@
-const mdLink = require('../index');
+const mdLink = require('../mdLinks');
 const fs = require('fs');
 const currentPath = process.cwd();
 
@@ -170,7 +170,7 @@ describe('mdLink', () => {
       })
 
   });
-  test('validando mdLinks erro message', () => {
+  test('validando mdLinks error message', () => {
     return mdLink('C:\\Users\\MariaAngelica\\Documents\\laboratoria\\markdowm-Fe\\lim20181-Track-FE-markdown-list\\test\\readme\\carpetaVacia', currentPath, undefined, undefined)
       .then(res => {
         expect(res).toEqual('NO SE ENCONTRARON LINKS')
@@ -178,15 +178,7 @@ describe('mdLink', () => {
       })
 
   })
-  test('validando mdLinks erro message', () => {
-    return mdLink('C:\\Users\\MariaAngelica\\Documents\\laboratoria\\markdowm-Fe\\lim20181-Track-FE-markdown-list\\test\\readme\\carpetaVacia', undefined, undefined, undefined)
-      .then(res => {
-        expect(res).toEqual( "NO SE ENCONTRARON LINKS")
-
-      })
-
-  })
-  test('validando mdLinks erro message', () => {
+  test('validando mdLinks error message', () => {
     return mdLink('C:\\Users\\MariaAngelica\\Documents\\laboratoria\\markdowm-Fe\\lim20181-Track-FE-markdown-list\\test\\readme\\carpetaVacia', currentPath, 'otra', undefined)
       .then(res => {
         expect(res).toEqual({
