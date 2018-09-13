@@ -1,7 +1,6 @@
 const myMarked = require('marked');
 const fs = require('fs');
 const route = require('path');
-
 // leer los datos del archivo
 const seeFile = (path) => {
   const array = [];
@@ -21,7 +20,6 @@ const seeFile = (path) => {
   });
   return array
 }
-
 //recursividad de directorios mas filtrado de archivos md
 const fileOdirectory = (path, array) => {
   const pathContent = fs.statSync(path);
@@ -44,9 +42,8 @@ const fileOdirectory = (path, array) => {
 // retorno 
 const fileResult = (path) => {
   const file = [];
-  fileOdirectory(path, file)
+  fileOdirectory(path, file);
   const result = seeFile(file);
   return result
 }
-
 module.exports = fileResult;

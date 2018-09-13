@@ -17,6 +17,7 @@ const fetch = require('node-fetch');
 const validateLink = (link) => {
   return fetch(link.href)
     .then(response => {
+      console.log(response);
       link.status = response.status;
       link.statusText = response.statusText;
       return link;
@@ -37,40 +38,44 @@ const retourWhitPromise = (path, option) => {
     broken: 0
   }]
   const promise = new Promise((resolve, reject) => {
-    Promise.all(path.map(element => {
-        return validateLink(element)
-      }))
-      .then(
-        response => {
-          if (optionV && !optionS) {
-            resolve(response)
-          }
-          if (!optionV && optionS) {
-            const funcional = unique(response, 'href');
-            obj[0].unique = funcional.length;
-            obj[0].total = response.length;
-            response.map(element => {
-              if (element.status === '400') {
-                obj[0].broken++;
-              }
-              return (element)
-            });
-            resolve(obj)
-          }
-          if (optionV && optionS) {
-            const funcional = unique(response, 'href');
-            obj[0].unique = funcional.length;
-            obj[0].total = response.length;
-            response.map(element => {
-              if (element.status === '400') {
-                obj[0].broken++;
-              }
-              return element
-            });
-            response.push(obj[0]);
-            resolve(response)
-          }
-        })
+    if (!optionV && !optionS) {
+      resolve(path)
+    } else {
+      Promise.all(path.map(element => {
+          return validateLink(element)
+        }))
+        .then(
+          response => {
+            if (optionV && !optionS) {
+              resolve(response)
+            }
+            if (!optionV && optionS) {
+              const funcional = unique(response, 'href');
+              obj[0].unique = funcional.length;
+              obj[0].total = response.length;
+              response.map(element => {
+                if (element.status === '400') {
+                  obj[0].broken++;
+                }
+                return (element)
+              });
+              resolve(obj)
+            }
+            if (optionV && optionS) {
+              const funcional = unique(response, 'href');
+              obj[0].unique = funcional.length;
+              obj[0].total = response.length;
+              response.map(element => {
+                if (element.status === '400') {
+                  obj[0].broken++;
+                }
+                return element
+              });
+              response.push(obj[0]);
+              resolve(response)
+            }
+          })
+    }
   });
   return promise
 }

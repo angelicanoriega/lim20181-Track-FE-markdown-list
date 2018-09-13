@@ -180,8 +180,9 @@ describe('mdLink', () => {
   })
   test('validando mdLinks error message', () => {
     return mdLink('C:\\Users\\MariaAngelica\\Documents\\laboratoria\\markdowm-Fe\\lim20181-Track-FE-markdown-list\\test\\readme\\carpetaVacia', currentPath, 'otra', undefined)
-      .then(res => {
-        expect(res).toEqual({
+      .then(res => {})
+      .catch(error => {
+        expect(error).toEqual({
           error: 'SINTAXIS INCORRECTA',
           correctOption: 'La sintaxis correcta de la linea de comando es:',
           a: '  mdLinks <ruta> ',
@@ -190,7 +191,6 @@ describe('mdLink', () => {
           d: 'mdLinks <ruta>  --validate  --stats',
           e: ' mdLinks <ruta>  --stats     --validate'
         })
-
       })
 
   })
