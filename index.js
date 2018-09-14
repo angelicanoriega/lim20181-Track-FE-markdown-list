@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const route = require('path');
-const onlyPath = require('../lim20181-Track-FE-markdown-list/onlyPath');
 const mdLinks = require('../lim20181-Track-FE-markdown-list/mdLinks');
 const currentFile = process.cwd();
 const [, , ...args] = process.argv;
@@ -52,8 +53,11 @@ if (onlyOptionsExists !== undefined) {
     mdLinks(saveData.route, saveData.option)
       .then(response => {
         response.forEach(element => {
-          console.log(element.total, '', element.unique);
-        });      })
+          console.log('TOTAL:', element.total);
+          console.log('UNIQUE:', element.unique);
+
+        });
+      })
   } else if (onlyOptionsExists === '--validate' && twoOptionsExists === undefined) {
     saveData.option.validate = true;
     mdLinks(saveData.route, saveData.option)
@@ -67,18 +71,20 @@ if (onlyOptionsExists !== undefined) {
     saveData.option.validate = true;
     mdLinks(saveData.route, saveData.option)
       .then(response => {
-        response.forEach(element => {
-          console.log(element.total, '', element.unique,'',element.broken);
-        });
+        const lastObject = response[(response.length) - 1]
+        console.log('TOTAL:', lastObject.total);
+        console.log('UNIQUE:', lastObject.unique);
+        console.log('BROKEN:', lastObject.broken);
       })
   } else if (onlyOptionsExists === '--validate' && twoOptionsExists === '--stats') {
     saveData.option.stats = true;
     saveData.option.validate = true;
     mdLinks(saveData.route, saveData.option)
       .then(response => {
-        response.forEach(element => {
-          console.log(element.total, '', element.unique,'',element.broken);
-        });
+        const lastObject = response[(response.length) - 1]
+        console.log('TOTAL:', lastObject.total);
+        console.log('UNIQUE:', lastObject.unique);
+        console.log('BROKEN:', lastObject.broken);
       })
   } else if (onlyOptionsExists !== '--validate' || onlyOptionsExists !== '--stats' || twoOptionsExists !== '--validate' || twoOptionsExists !== '--stats') {
     console.log(errorMesage);
