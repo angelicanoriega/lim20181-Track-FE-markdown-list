@@ -23,19 +23,17 @@ algunas estadísticas.
 
 `<options>` debe tener los valores de:
 
-`--stats` muestra cantidad de links totales,que aun funcionan y los rotos.
+`--stats` muestra cantidad de links totales y unicos.
 
-`--validate` muestra ruta de archivo, texto de referencia, link, estado de link y un texto de estado.
+`--validate` muestra ruta de archivo, link, texto de referencia, estado de link y un texto de estado.
 
-`--stats --validate` muestra ruta de archivo, texto de referencia, link, estado de link, texto de estado,
- cantidad de links totales,funcionales y los rotos.
-
+`--stats --validate` muestra cantidad de links totales, unicos y rotos.
  ## Ejemplos de Uso 
 
 `$ md-links <route> `
 ----------------------
 
-Solo la ruta del archivo: Muestra ruta de archivo o carpeta, texto de referencia y links.
+Solo la ruta del archivo: Muestra ruta de archivo links y texto de referencia .
 
 [![npm](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ruta.PNG)](https://raw.githubusercontent.com/angelicanoriega/lim20181-Track-FE-markdown-list/master/imagenes/ruta.PNG)
 

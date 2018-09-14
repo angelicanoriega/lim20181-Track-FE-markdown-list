@@ -38,7 +38,7 @@ if (file !== undefined) {
 if (onlyOptionsExists === undefined) {
   mdLinks(saveData.route, saveData.option)
     .then(response => {
-      if (response === undefined) {
+      if (response[0] === undefined) {
         console.log('NO SE ENCONTRARON LINKS');
       } else {
         response.forEach(element => {
@@ -62,9 +62,13 @@ if (onlyOptionsExists !== undefined) {
     saveData.option.validate = true;
     mdLinks(saveData.route, saveData.option)
       .then(response => {
-        response.forEach(element => {
-          console.log(element.file, '', element.href, '', element.statusText, '', element.status, element.text);
-        });
+        if (response[0] === undefined) {
+          console.log('NO SE ENCONTRARON LINKS');
+        } else {
+          response.forEach(element => {
+            console.log(element.file, '', element.href, '', element.statusText, '', element.status, element.text);
+          });
+        }
       })
   } else if (onlyOptionsExists === '--stats' && twoOptionsExists === '--validate') {
     saveData.option.stats = true;

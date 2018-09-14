@@ -82,7 +82,6 @@ const fetch = require('node-fetch');
 const validateLink = (link) => {
   return fetch(link.href)
     .then(response => {
-      console.log(response);
       link.status = response.status;
       link.statusText = response.statusText;
       return link;
